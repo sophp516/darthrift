@@ -80,7 +80,7 @@ const Post = (props) => {
         <Navbar />
         <div className="post">  
             <div className="button">
-                <button className="closeButton" onClick={() => navigate('./home')}>X</button>
+                <button className="closeButton" onClick={() => navigate('/')}>X</button>
             </div>
             <div className="postCard">
                 <form action="POST">

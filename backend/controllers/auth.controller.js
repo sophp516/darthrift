@@ -5,9 +5,9 @@ import newtoken from "../utils/token.js";
 
 export const signup = async (req, res) => {
     try {
-        const { email, username, password, confirmpassword } = req.body
+        const { email, username, password, confirmPassword } = req.body
 
-        if (password !== confirmpassword) {
+        if (password !== confirmPassword) {
             return res.status(400).json({error: "Passwords do not match"})
         }
 

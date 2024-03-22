@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 import '../style/ProductDetails.css'
 import 'primeicons/primeicons.css';
 
@@ -27,6 +28,11 @@ const ProductDetails = (props) => {
         }
     }
 
+    const goToHome = () => {
+        console.log("home")
+        navigate('/')
+    }
+
     if (selectedProductIndex) {
         const product = products[selectedProductIndex]
         if (typeof product.img === 'string') {
@@ -35,8 +41,9 @@ const ProductDetails = (props) => {
             imageUrl = URL.createObjectURL(product.img);
         }
         return (
+            <>
             <div className="productPage">
-                <button onClick={() => navigate('./home')}><i style={{ fontSize: '40px' }} className="pi pi-angle-left"></i></button>
+                <button onClick={goToHome}><i style={{ fontSize: '40px' }} className="pi pi-angle-left"></i></button>
                 <div className="productDetail">
                     {product.img === null ? <img className="no-pic" src="src/assets/images.png"></img> : <img src={imageUrl} />}
                     <p className="product-name">{product.name}</p>
@@ -47,6 +54,7 @@ const ProductDetails = (props) => {
                     <button>Start Conversation</button>
                 </div>
             </div>
+        </>
         )
     } else {
         return null

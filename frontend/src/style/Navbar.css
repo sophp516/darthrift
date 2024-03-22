@@ -6,6 +6,14 @@
     color: white;
 }
 
+#home-b {
+    padding-left: 20px;
+}
+
+.pi-comment {
+    color: white;
+}
+
 .navbar:first-child {
     padding-left: 10px;
     padding-right: 10px;

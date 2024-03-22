@@ -1,0 +1,54 @@
+.profilecard {
+    height: 300px;
+    background-color: white;
+    margin: 20px;
+    border-radius: 5px;
+    border: 2px solid var(--darkgreen)
+}
+
+.conversations {
+    background-color: white;
+    padding: 20px;
+}
+
+#pfp {
+    width: 100px;
+    height: 100px;
+}
+
+.conversation {
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid var(--darkgray);
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+#logout {
+    margin-right: 30px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.profilecard > p {
+    padding-left: 30px;
+}
+
+h2 {
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 30px;
+}
+
+.my-items {
+    padding-left: 30px;
+}
+
+.my-items > p {
+    font-size: 17px;
+}
