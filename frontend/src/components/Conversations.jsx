@@ -1,25 +1,29 @@
-import useGetConversations from "../hooks/useGetConversations";
-import Conversation from "./Conversation";
-import Navbar from "./Navbar";
+import useGetConversations from "../hooks/useGetConversations.js";
+import Conversation from "./Conversation.jsx";
+import Navbar from "./Navbar.jsx";
+import MessageContainer from "./MessageContainer.jsx";
 import '../style/Conversation.css'
 
 const Conversations = () => {
 	const { loading, conversations } = useGetConversations();
+    
 	return (
-		<div>
+		<main>
             <Navbar></Navbar>
-            <div className="conversations">
-                {conversations.map((conversation, idx) => (
-                    <Conversation
-                        key={conversation._id}
-                        conversation={conversation}
-                        lastIdx={idx === conversations.length - 1}
-                    />
-                ))}
+            <div className="chat">
+                <div className="conversations">
+                    {conversations.map((conversation) => (
+                        <Conversation
+                            key={conversation._id}
+                            conversation={conversation}
+                        />
+                    ))}
 
-                {loading ? <span className='loading loading-spinner mx-auto'></span> : null}
+                    {loading ? <span className='loading loading-spinner mx-auto'></span> : null}
+                </div>
+                <div className="messageContainer"><MessageContainer /></div>
             </div>
-		</div>
+		</main>
 	);
 };
 export default Conversations;

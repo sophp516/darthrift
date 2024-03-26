@@ -1,52 +1,41 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Navbar from "./Navbar";
+import usePost from '../hooks/usePost';
 import '../style/Post.css'
 
-const Post = (props) => {
+const Post = () => {
 
     const [newProduct, setNewProduct] = useState({ 
         img: null,
-        name: "",
+        productName: "",
         price: "",
-        date: "",
         description: "",
-        isFavorite: false,
-        isSold: false,
         })
 
-        const navigate = useNavigate();
+    const fileInputRef = useRef(null);
+    const navigate = useNavigate();
+    const { postHook } = usePost();
     
-    const addProduct = () => {
-        const alphanumericRegex = /[a-zA-Z0-9]/;
-        if ((newProduct.name !== "" || alphanumericRegex.test(newProduct.name)) && (newProduct.price !== null || typeof newProduct.price === 'number')) {
-
-            const today = new Date();
-            const month = today.getMonth() + 1;
-            const year = today.getFullYear();
-            const date = today.getDate();
+    const addProduct = async (event) => {
+        event.preventDefault();
+        if (newProduct.productName !== "" && (newProduct.price !== null || typeof newProduct.price === 'number')) {
 
             // setNewProduct(prevState => ({...prevState, date: `${month}/${date}/${year}`}))
-            // using newProduct here doesn't work because the new date value is not reflected in the render
-            const updatedProduct = {
-                ...newProduct,
-                date: `${month}/${date}/${year}`
-            };    
+            // using newProduct here doesn't work because the new date value is not reflected in the render    
 
-            props.addProduct(updatedProduct)
+            await postHook(newProduct)
             setNewProduct({ 
                 img: null,
-                name: "",
+                productName: "",
                 price: null,
                 date: "",
                 description: "",
-                isFavorite: false,
                 isSold: false,
                 })
-            navigate('/home');
-        } else {
-            alert("Invalid or missing input. Try again!")
-        }
+
+            navigate('/');
+        } 
     }
 
 
@@ -60,13 +49,22 @@ const Post = (props) => {
         console.log(newProduct)
     }; */
 
+    
     const handleChange = (event) => {
         const { name, type, files } = event.target;
-        const selectedFile = files && files[0];
-        if (type === "file" && selectedFile) {
+
+        if (type === "file") {
+            const selectedFile = files[0];
             // Process the selected file as needed
-            console.log('Selected file:', selectedFile.name);
-            setNewProduct(prevState => ({ ...prevState, [name]: selectedFile }));
+            if (selectedFile) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                const imageData = reader.result;
+                setNewProduct(prevState => ({ ...prevState, img: imageData }));
+            };
+            reader.readAsDataURL(selectedFile);
+            }
+
         } else {
             // For other input types, update the state normally
             setNewProduct(prevState => ({ ...prevState, [name]: event.target.value }));
@@ -80,15 +78,15 @@ const Post = (props) => {
         <Navbar />
         <div className="post">  
             <div className="button">
-                <button className="closeButton" onClick={() => navigate('/')}>X</button>
+                <button className="closeButton" onClick={() => navigate('/')}><i style={{ fontSize: '40px' }} className="pi pi-angle-left"></i></button>
             </div>
             <div className="postCard">
-                <form action="POST">
-                    <div className="input">
-                        <input name="img" type="file" onChange={handleChange}></input>
+                <form id="postId">
+                    <div id="file-div" className="input">
+                        <input id="file" name="img" type="file" onChange={handleChange} ref={fileInputRef} ></input>
                     </div>
                     <div className="input">
-                        <input placeholder="Name your Goody" name="name" value={newProduct.name} type="text" onChange={handleChange}></input>
+                        <input placeholder="Name your Goody" name="productName" value={newProduct.productName} type="text" onChange={handleChange}></input>
                     </div>
                     <div className="input">
                         <input placeholder="Set Price" name="price" value={newProduct.price} type="number" onChange={handleChange}></input>

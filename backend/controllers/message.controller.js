@@ -33,13 +33,14 @@ export const sendMessage = async (req, res) => {
 
         res.status(201).json(newMessage)
 
-    } catch(err) {
+    } catch(error) {
         res.status(500).json({error: "Internal server error"})
     }
 }
 
 export const getMessages = async (req, res) => {
     try {
+
         const { id:userToChatId } = req.params;
         const senderId = req.user._id
 

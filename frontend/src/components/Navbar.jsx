@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import '../style/Navbar.css'
 
-const Navbar = (props) => {
+const Navbar = () => {
     const username = localStorage.getItem('darthrift-user') ? JSON.parse(localStorage.getItem('darthrift-user')).username : "guest";
 
     return (

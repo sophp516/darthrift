@@ -3,10 +3,14 @@
 }
 
 .mainContainer {
-    min-height: 100vh;
+    height: 100%;
 }
 
 .white {
+    background-color: white;
+}
+
+.header {
     background-color: white;
 }
 

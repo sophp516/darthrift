@@ -6,6 +6,9 @@
     margin-bottom: 100px;
     margin-left: 30px;
     margin-top: 30px;
+    border: none;
+    background-color: white;
+    border-radius: 5px;
 }
 
 .buttonContainer {
@@ -56,11 +59,7 @@ input {
     padding-bottom: 10px;
 }
 
-input:focus, textarea:focus {
-    outline: none;
-}
-
-input:first-of-type {
+#postId > input:first-of-type {
     margin-top: 40px;
 }
 

@@ -19,7 +19,12 @@ const userSchema = new mongoose.Schema({
     profilepic: {
         type: String,
         default: ""
-    }
+    },
+    favoriteProducts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        default: [],
+    }]
     // createdAt, updatedAt
 }, {timestamps: true})
 

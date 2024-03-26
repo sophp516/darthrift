@@ -1,63 +1,61 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
 import '../style/ProductDetails.css'
 import 'primeicons/primeicons.css';
 
 const ProductDetails = (props) => {
     
-    const [products, setProducts] = useState([])
     const [selectedProduct, setSelectedProduct] = useState(null)
-    const [selectedProductIndex, setSelectedProductIndex] = useState(null)
-    const navigate = useNavigate();
-
+    const [isFavorite, setIsFavorite] = useState(null)
+    
     useEffect(() => {
         setSelectedProduct(props.selectedProduct)
-        setSelectedProductIndex(props.selectedProductIndex)
-    }, [props.selectedProductIndex, props.selectedProduct, navigate])
-
+    }, [props.selectedProduct])
 
     useEffect(() => {
-        setProducts(props.products)
-    }, [props.products])
+        setIsFavorite(props.isFavorite)
+    }, [props.isFavorite])
 
-
-    const toggleFavorite = () => {
-        if (selectedProductIndex) {
-            props.toggleFavorite(selectedProductIndex);
-        }
+    const setSelectProductNull = () => {
+        props.setSelectProductNull()
     }
 
-    const goToHome = () => {
-        console.log("home")
-        navigate('/')
+    const toggleFavorite = (product) => {
+        props.toggleFavorite(product)
     }
 
-    if (selectedProductIndex) {
-        const product = products[selectedProductIndex]
-        if (typeof product.img === 'string') {
-            imageUrl = product.img;
-        } else if (product.img instanceof Blob) {
-            imageUrl = URL.createObjectURL(product.img);
+    if (selectedProduct) {
+        const createdAt = selectedProduct.createdAt;
+        const dateObj = new Date(createdAt);
+        const month = dateObj.getMonth() + 1; // Months are zero-based, so add 1
+        const date = dateObj.getDate();
+        const year = dateObj.getFullYear();
+        const formattedDate = `${month}/${date}/${year}`;
+
+        let imageUrl;
+        if (typeof selectedProduct.img === 'string') {
+            // If product.img is a URL or string, use it directly
+            imageUrl = selectedProduct.img;
+        } else if (selectedProduct.img instanceof Blob) {
+            // If product.img is a Blob or File object, create a URL for it
+            imageUrl = URL.createObjectURL(selectedProduct.img);
         }
+
         return (
             <>
-            <div className="productPage">
-                <button onClick={goToHome}><i style={{ fontSize: '40px' }} className="pi pi-angle-left"></i></button>
-                <div className="productDetail">
-                    {product.img === null ? <img className="no-pic" src="src/assets/images.png"></img> : <img src={imageUrl} />}
-                    <p className="product-name">{product.name}</p>
-                    <p className="product-price">$ {product.price}</p>
-                    <p className="product-date">{product.date}</p>
-                    <p className="product-description">{product.description}</p>
-                    <p className="product-isFavorite" onClick={toggleFavorite}>{product.isFavorite ? <i className="pi pi-heart-fill"></i> : <i className="pi pi-heart"></i>}</p>
-                    <button>Start Conversation</button>
+                <div className="productPage">
+                    <button onClick={setSelectProductNull}><i style={{ fontSize: '40px' }} className="pi pi-angle-left"></i></button>
+                    <div className="productDetail">
+                        {selectedProduct.img === null ? <img className="no-pic" src="src/assets/images.png"></img> : <img src={imageUrl} />}
+                        <p className="product-name">{selectedProduct.name}</p>
+                        <p className="product-price">$ {selectedProduct.price}</p>
+                        <p className="product-date">{formattedDate}</p>
+                        <p className="product-description">{selectedProduct.description}</p>
+                        <p onClick={() => toggleFavorite(selectedProduct)} className="product-isFavorite">{isFavorite ? <i className="pi pi-heart-fill"></i> : <i className="pi pi-heart"></i>}</p>
+                        <button>Start Conversation</button>
+                    </div>
                 </div>
-            </div>
-        </>
-        )
-    } else {
-        return null
+            </>
+        );
     }
 }
 

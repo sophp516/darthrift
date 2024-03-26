@@ -45,7 +45,6 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={authUser ? <Home products={products} toggleFavorite={toggleFavorite} /> : <Navigate to={"/login"} />}></Route>
-        <Route path="/productdetails" element={<ProductDetails products={products} toggleFavorite={toggleFavorite}/>}></Route>
         <Route path="/profile" element={authUser ? <Profile /> : <Navigate to={"/login"} />}></Route>
         <Route path="/post" element={<Post addProduct={addProduct} />}></Route>
         <Route path="/signup" element={authUser ? <Navigate to="/" /> : <Signup/>}></Route>

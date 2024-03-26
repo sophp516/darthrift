@@ -1,74 +1,87 @@
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-import ProductDetails from './ProductDetails'
+import useGetAllProducts from "../hooks/useGetAllProducts";
+import useToggleFavorite from "../hooks/useToggleFavorite.js";
+import ProductDetails from "./ProductDetails.jsx"
+import Product from "./Product.jsx"
 import Navbar from "./Navbar";
 import 'primeicons/primeicons.css';
+import '../style/Home.css'
 
-const Home = (props) => {
+const Home = () => {
 
-    const [products, setProducts] = useState([])
-    const [selectedProduct, setSelectedProduct] = useState(null)
-    const [selectedProductIndex, setSelectedProductIndex] = useState(null)
-    
-    // Changes in dependency variable are constantly updated locally through hook
+    const [selectedProduct, setSelectedProduct] = useState("")
+    const [userFavorites, setUserFavorites] = useState([]);
+
+    const { loading, products } = useGetAllProducts();
+    const { toggleFavorite } = useToggleFavorite();
+
     useEffect(() => {
-        setProducts(props.products)
-      }, [props.products])
+        const storedFavorites = localStorage.getItem("userFavorites");
+        if (storedFavorites) {
+            setUserFavorites(JSON.parse(storedFavorites));
+        }
+    }, []);
 
-    const selectProduct = (product, index) => {
-        setSelectedProductIndex(index)
+    const selectProduct = (product) => {
         setSelectedProduct(product)
     }
 
-    const toggleFavorite = (index) => {
-        console.log("home.jsx")
-        props.toggleFavorite(index)
+    const setSelectProductNull = () => {
+        setSelectedProduct("")
     }
 
-    let productCards = []
-    // prevent error when products list is empty
-    if (products !== null) {
-        // Use Object.entries when mapping over deconstructed objects
-        productCards = Object.entries(products).map(([index, product]) => {
-    
-        let imageUrl;
-        if (typeof product.img === 'string') {
-            // If product.img is a URL or string, use it directly
-            imageUrl = product.img;
-        } else if (product.img instanceof Blob) {
-            // If product.img is a Blob or File object, create a URL for it
-            imageUrl = URL.createObjectURL(product.img);
-        } return (
-            <div className="productCard" key={index}>
-                <div className="pic-container">
-                    {product.img === null ? <img className="no-pic" onClick={() => selectProduct(product, index)} src="src/assets/images.png"></img> : <img className="pic" src={imageUrl} onClick={() => selectProduct(product)}/>}
-                </div>
-                <div className="cardText" onClick={() => selectProduct(product, index)}>
-                    <p className="product-name">{product.name}</p>
-                    <p className="product-price">$ {product.price}</p>
-                    <p className="product-date">{product.date}</p>
-                </div>
-                <div className="isFavorite" onClick={() => toggleFavorite(index)}>{product.isFavorite ? <i className="pi pi-heart-fill"></i> : <i className="pi pi-heart"></i>}</div>
-                
+    const handleToggleFavorite = async (product) => {
+        const productId = product._id;
+
+        const updatedFavorites = userFavorites.includes(product._id)
+            ? userFavorites.filter((id) => id !== product._id)
+            : [...userFavorites, product._id];
+
+        localStorage.setItem("userFavorites", JSON.stringify(updatedFavorites));
+        setUserFavorites(updatedFavorites);
+        await toggleFavorite(productId)
+    }
+
+    if (loading) {
+        return (
+            <div className="buttonContainer">
+                <Link to="/post">
+                    <button className="sellButton">Sell my item</button>
+                </Link>
             </div>
-            )
-         })
-    } 
-
-    return (
-        <div className={selectedProduct ? "mainContainer white" : "mainContainer"}>
-            <Navbar />
-            <main>
-                {selectedProduct ? <ProductDetails products={products} toggleFavorite={toggleFavorite} selectedProduct={selectedProduct} selectedProductIndex={selectedProductIndex} /> : <div className="cardContainer">{productCards}</div>}
-                <div className="buttonContainer">
-                    <Link to="/post">
-                        <button className="sellButton">Sell my item</button>
-                    </Link>
-                </div>
-            </main>
-        </div>
-
-    )
+        )
+    } else {
+        return (
+            <div className={selectedProduct ? "mainContainer white" : "mainContainer"}>
+                <Navbar />
+                <main>
+                    {selectedProduct ? <ProductDetails 
+                                        setSelectProductNull={setSelectProductNull} 
+                                        toggleFavorite={() => handleToggleFavorite(selectedProduct)} 
+                                        isFavorite={userFavorites.includes(selectedProduct._id)} 
+                                        selectedProduct={selectedProduct} /> 
+                    : <div className="cardContainer">
+                        {products.map((product) => (
+                            <Product
+                                key={product._id}
+                                product={product}
+                                selectProduct={selectProduct}
+                                toggleFavorite={() => handleToggleFavorite(product)}
+                                isFavorite={userFavorites.includes(product._id)}
+                            />
+                ))}</div>}
+                    <div className="buttonContainer">
+                        <Link to="/post">
+                            <button className="sellButton">Sell my item</button>
+                        </Link>
+                    </div>
+                </main>
+            </div>
+    
+        )
+    }
+    
 }
 
 export default Home

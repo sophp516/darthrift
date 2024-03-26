@@ -9,7 +9,7 @@ const Login = () => {
         password: "",
     });
 
-    const { loading, login }= useLogin()
+    const { loading, login } = useLogin()
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -45,4 +45,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Login; 
