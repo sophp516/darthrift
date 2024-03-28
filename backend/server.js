@@ -6,12 +6,14 @@ import userRoutes from "./routes/user.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import productRoutes from "./routes/product.routes.js"
 import connectToMongoDB from "./db/mongodb.js";
+import bodyParser from "body-parser";
 
 const app = express();
 const PORT = process.env.PORT || 5000
 
 dotenv.config();
 
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.json()); // parse incoming requests with JSON
 app.use(cookieParser());
 

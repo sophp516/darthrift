@@ -21,7 +21,7 @@ export const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt)
 
         //pfp generating api
-        const randompfp = `https://avatar.iran.liara.run/username?username=${username}&length=1`
+        const randompfp = `https://ui-avatars.com/api/?name=${username}&length=1`
 
         const newuser = new User({
             email,

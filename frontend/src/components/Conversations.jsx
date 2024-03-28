@@ -1,11 +1,20 @@
+import { useEffect } from "react";
 import useGetConversations from "../hooks/useGetConversations.js";
 import Conversation from "./Conversation.jsx";
 import Navbar from "./Navbar.jsx";
 import MessageContainer from "./MessageContainer.jsx";
+import useConversation from "../zustand/useConversation.js";
 import '../style/Conversation.css'
 
 const Conversations = () => {
 	const { loading, conversations } = useGetConversations();
+    const { selectedConversation, setSelectedConversation } = useConversation();
+
+    useEffect(() => {
+        if (!selectedConversation && conversations.length > 0) {
+            setSelectedConversation(conversations[conversations.length - 1]);
+        }
+    }, [selectedConversation, conversations, setSelectedConversation]);
     
 	return (
 		<main>

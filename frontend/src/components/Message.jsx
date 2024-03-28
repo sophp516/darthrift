@@ -7,7 +7,7 @@ const Message = ({ message }) => {
 	const { selectedConversation } = useConversation();
 	const fromMe = message.senderId === authUser._id;
 	const chatClassName = fromMe ? "chat-end" : "chat-start";
-	const profilePic = fromMe ? authUser.profilepic : selectedConversation?.profilepic;
+    const yourPic = selectedConversation?.profilepic;
 
     function padZero(number) {
         return number.toString().padStart(2, "0");
@@ -22,14 +22,12 @@ const Message = ({ message }) => {
     const formattedTime = extractTime(message.createdAt);
     
 	return (
-		<div className={`${chatClassName}`}>
-			<div>
-				<div>
-					<img id="message-pfp" src={profilePic} />
-				</div>
-			</div>
-			<div>{message.message}</div>
-			<div>{formattedTime}</div>
+		<div className={`chat-block ${chatClassName}`}>
+			{fromMe ? <div></div> : <div> <img id="message-pfp" src={yourPic} /></div>}
+            <div id="message-block">
+                <div id="message-message">{message.message}</div>
+                <div id="message-time">{formattedTime}</div>
+            </div>
 		</div>
 	);
 };

@@ -30,7 +30,7 @@ const MessageContainer = () => {
     return (
         <div className="chatbox">{!selectedConversation ? <NoChat /> 
         : (
-        <div>
+        <div className="msc-main">
             <div className="header2"><i onClick={handleConversationClick} style={{ fontSize: '40px' }} className="pi pi-angle-left"></i><span>To: </span><span id="username-message">{selectedConversation.username}</span></div>
             <Messages />
             <MessageInput />

@@ -24,7 +24,6 @@
     display: flex;
     background-color: var(--green);
     flex-direction: row;
-    align-items: center;
     padding-top: 10px;
 }
 
@@ -44,15 +43,33 @@
     margin-top: 0;
 }
 
+.sendText {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.msc-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .header2 {
     width: 100%;
     border-bottom: 2px solid var(--darkgreen);
     background-color: var(--green);
     color: white;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
 }
 
 .flex-nochat {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;

@@ -48,11 +48,13 @@ const Profile = () => {
         return (
             <div className="profilecard">
                 <div className="header">
-                    <h2>Hello {JSON.parse(localStorage.getItem('darthrift-user')).username}</h2>
-                    <LogoutButton />
-                    <div>
+                    <div className="header-inner1">
+                        <h2>Hello {JSON.parse(localStorage.getItem('darthrift-user')).username}</h2>
+                        <LogoutButton />
+                    </div>
+                    <div className="header-inner2">
                         <p>My posts</p>
-                        <div></div>
+                        <div id="mypost-container"></div>
                     </div>
                 </div>
                 

@@ -1,8 +1,58 @@
 #message-pfp {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
 }
 
 #messages {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#message-message {
+    background-color: white;
+    padding: 3px;
+    font-size: 18px;
+}
+
+#message-time {
+    font-size: 10px;
+}
+
+.chat-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#notext {
+    text-align: center;
+    color: gray;
+}
+
+#message-block {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.chat-end {
+    display: flex;
+    text-align: right;
+    flex-direction: row-reverse;
+    margin-left: auto;
+    margin-right: 3px;
+}
+
+.chat-start {
+    display: flex;
+    text-align: left;
+    flex-direction: row;
+    margin-right: auto;
+    margin-left: 3px;
 }

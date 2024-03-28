@@ -17,7 +17,7 @@ const Messages = () => {
                 </div>
             ))}
             {messages.length === 0 && (
-				<p>Send a message to start the conversation</p>
+				<p id="notext">Send a message to start the conversation</p>
 			)}
         </div>
     )

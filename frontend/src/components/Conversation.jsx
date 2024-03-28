@@ -6,20 +6,21 @@ const Conversation = ({ conversation }) => {
 	const isSelected = selectedConversation?._id === conversation._id;
 
 	const handleConversationClick = () => {
-        console.log("Conversation clicked:", conversation);
         setSelectedConversation(conversation);
     };
+
+	
 
 	return (
 		<div className={`conversation-block ${isSelected ? "selected" : "not-selected"}`} onClick={() => handleConversationClick(conversation)}>
 			<div className="profile-holder">
-				<div>
+				<div id="pfp-padding">
 					<img id="pfp" src={conversation.profilepic} alt='user avatar' />
 				</div>
 
 				<div>
 					<div>
-						<p>{conversation.username}</p>
+						<p id="pfp-name">{conversation.username}</p>
 					</div>
 				</div>
 			</div>

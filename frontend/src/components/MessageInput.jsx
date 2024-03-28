@@ -5,7 +5,6 @@ import '../style/MessageContainer.css'
 const MessageInput = () => {
     const [ message, setMessage ] = useState("")
     const { sendMessage } = useSendMessage();
-    console.log("rerendeer")
 
     const handleTextClick = async (event) => {
         event.preventDefault();

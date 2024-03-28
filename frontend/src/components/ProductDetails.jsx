@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import useStartMessage from '../hooks/useStartMessage';
 import '../style/ProductDetails.css'
 import 'primeicons/primeicons.css';
 
@@ -6,6 +8,10 @@ const ProductDetails = (props) => {
     
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [isFavorite, setIsFavorite] = useState(null)
+    const navigateto = useNavigate();
+    
+
+    const { startMessage } = useStartMessage();
     
     useEffect(() => {
         setSelectedProduct(props.selectedProduct)
@@ -21,6 +27,15 @@ const ProductDetails = (props) => {
 
     const toggleFavorite = (product) => {
         props.toggleFavorite(product)
+    }
+
+    const handleclick = async (event) => {
+        event.preventDefault();
+        const senderId = selectedProduct.senderId;
+        console.log(selectedProduct.productName)
+        console.log(senderId)
+        await startMessage(`${selectedProduct.productName} purchase request!`, senderId);
+        navigateto('/chat');
     }
 
     if (selectedProduct) {
@@ -45,13 +60,13 @@ const ProductDetails = (props) => {
                 <div className="productPage">
                     <button onClick={setSelectProductNull}><i style={{ fontSize: '40px' }} className="pi pi-angle-left"></i></button>
                     <div className="productDetail">
-                        {selectedProduct.img === null ? <img className="no-pic" src="src/assets/images.png"></img> : <img src={imageUrl} />}
+                        {selectedProduct.img === null ? <img className="no-pic" src="src/assets/images.png"></img> : <img className="yes-pic" src={imageUrl} />}
                         <p className="product-name">{selectedProduct.name}</p>
                         <p className="product-price">$ {selectedProduct.price}</p>
                         <p className="product-date">{formattedDate}</p>
                         <p className="product-description">{selectedProduct.description}</p>
                         <p onClick={() => toggleFavorite(selectedProduct)} className="product-isFavorite">{isFavorite ? <i className="pi pi-heart-fill"></i> : <i className="pi pi-heart"></i>}</p>
-                        <button>Start Conversation</button>
+                        <button onClick={handleclick}>Start Conversation</button>
                     </div>
                 </div>
             </>

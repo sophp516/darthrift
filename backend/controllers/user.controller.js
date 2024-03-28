@@ -1,13 +1,27 @@
 import User from "../models/user.model.js";
+import Conversation from "../models/conversation.model.js";
 import Product from "../models/product.model.js"
 
 export const getUsers = async (req, res) => {
     try {
         const loggedInUserId = req.user._id;
 
-        const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password")
+        // const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password")
 
-        res.status(200).json(filteredUsers);
+        const conversations = await Conversation.find({ participants: loggedInUserId });
+
+        // Extract participant IDs from conversations
+        const participantIds = conversations.flatMap(conversation => conversation.participants);
+
+        // Remove duplicates and the logged-in user's ID from participantIds
+        const uniqueParticipantIds = Array.from(new Set(participantIds.filter(id => id.toString() !== loggedInUserId.toString())));
+
+        // Fetch users based on the filtered participant IDs
+        const filteredUsersFinal = await User.find({ _id: { $in: uniqueParticipantIds } }).select("-password");
+
+        res.status(200).json(filteredUsersFinal);
+
+        // res.status(200).json(filteredUsers);
 
     } catch (error) {
         console.log("Error in getUsers: ", error.message)
