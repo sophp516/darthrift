@@ -5,6 +5,7 @@ import useLogout from "../hooks/useLogout";
 import Product from "./Product.jsx"
 import useGetFavorites from "../hooks/useGetFavorites.js";
 import useToggleFavorite from "../hooks/useToggleFavorite.js";
+import useGetMyProducts from "../hooks/useGetMyProducts.js";
 import 'primeicons/primeicons.css';
 import '../style/Conversation.css'
 import '../style/Home.css'
@@ -16,6 +17,7 @@ const Profile = () => {
     const { loading, logout } = useLogout()
     const { favoriteProducts } = useGetFavorites();
     const [userFavorites, setUserFavorites] = useState([]);
+    const { myProducts } = useGetMyProducts();
 
     useEffect(() => {
         const storedFavorites = localStorage.getItem("userFavorites");
@@ -28,6 +30,21 @@ const Profile = () => {
         
         return (
             <div>{!loading ? <button id="logout" onClick={logout}>log out</button> : <i className="pi pi-spin pi-spinner"></i>}</div>
+        )
+    }
+
+    const MyProductList = () => {
+        return (
+            <div id="mypost-container">
+            {myProducts.map((product) => {
+                return (
+                    <div className="mypost-content" key={product._id}>
+                        {product.productName}
+                    </div>
+                )
+            })}
+            </div>
+            
         )
     }
 
@@ -54,7 +71,9 @@ const Profile = () => {
                     </div>
                     <div className="header-inner2">
                         <p>My posts</p>
-                        <div id="mypost-container"></div>
+                        <div id="productList-container">
+                        <MyProductList />
+                        </div>
                     </div>
                 </div>
                 

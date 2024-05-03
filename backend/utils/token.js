@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 
 const newtoken = (userId, res) => {
 
@@ -11,7 +10,7 @@ const newtoken = (userId, res) => {
 
     res.cookie("jwt", token, {
         maxAge: 30 * 24 * 60 * 60 * 1000, //ms
-        httpOnly: true, //prevent XSS attacks cross-cite scripting attacks
+        httpOnly: true,
         sameSite: "strict"
     })
 }
