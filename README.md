@@ -19,7 +19,7 @@ In order to run the code locally:
 Darthrift was a project I worked on during the two-week break after the winter term. 
 After covering React basics through the WISP project last term, I wanted to get ahead and learn about backend development before diving into it in the spring term. 
 I watched a few Node.js tutorials right before the end of the term and followed along with a YouTube tutorial (link: https://www.youtube.com/watch?v=HwCqsOis894) during the break. 
-While I got the file structure and some backend code (token & message/auth endpoints) from the tutorial, it was still challenging because it was my first time working with databases, making API requests, and doing backend work in general. 
+While I got the file structure and some backend code (token & message/auth endpoints) from the tutorial, it was still challenging because it was my first time working with databases, making custom hooks, and doing backend work in general. 
 Although the tutorial had some of the features I wanted to implement, it lacked many others. However, this two-week journey taught me a lot, and I was able to implement additional features and endpoints on my own.
 
 
