@@ -1,4 +1,5 @@
 ## Video
+https://youtu.be/KsjG5nW-FMg
 
 ## Description
 Darthrift is an online thrifting website where users can sign up, log in, and post items they want to sell. 
