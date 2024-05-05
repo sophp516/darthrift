@@ -6,6 +6,9 @@ Darthrift is an online thrifting website where users can sign up, log in, and po
 Other users can like the posts, and if they press the 'start conversation' button in the ProductDetails component, the system automatically initiates a conversation between the two parties for negotiation and arrangements. 
 Each user has their own profile page where they can view all their favorite (liked) items as well as all the items they have posted.
 
+## Architecture
+I used React and Zustand for frontend and mongoDB, mongoose, express, and node for backend.
+
 
 ## Instruction
 To access deployed website, visit: https://darthrift.onrender.com
